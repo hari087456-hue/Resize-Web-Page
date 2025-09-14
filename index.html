@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online image and PDF compression tools. Optimize your files without losing quality.">
+    <meta name="keywords" content="image compression, pdf compression, optimize images, reduce file size, online tool">
+    <title>FileCompress Pro+ - Advanced File Optimization Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+     <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4776326465919653" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-compress-alt"></i> FileCompress Pro+</h1>
+            <p class="header-subtitle">Optimize, edit, convert and transform your images and documents</p>
+            <a href="#tool" class="button"><i class="fas fa-bolt"></i> Start Using Tools</a>
+        </header>
+      
+         <!-- Top Ad Container -->
+        <div class="ad-container" id="myAd1">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4776326465919653"
+                 data-ad-slot="6110874826"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <section id="tool">
+            <h2>All-in-One Tool Suite</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="compress">Compress Image</button>
+                <button class="tab-btn" data-tab="edit">Edit Image</button>
+                <button class="tab-btn" data-tab="merge">Merge Images</button>
+                <button class="tab-btn" data-tab="compress-pdf">Compress PDF</button>
+                <button class="tab-btn" data-tab="resize-pdf">Resize PDF</button>
+                <button class="tab-btn" data-tab="merge-pdf">Merge PDF</button>
+                <button class="tab-btn" data-tab="text-to-pdf">Text to PDF</button>
+                <button class="tab-btn" data-tab="pdf-to-text">PDF to Text</button>
+            </div>
+            
+            <!-- Image Compression Tab -->
+            <div class="tab-content active" id="compress-tab">
+                <div class="tool-container">
+                    <div class="upload-area" id="dropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & Drop your image here</p>
+                        <p>or</p>
+                        <button class="button" id="selectImageBtn"><i class="fas fa-file-image"></i> Select Image</button>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                        <p class="supported-formats">Supports: JPG, PNG, WebP, GIF, BMP (Max: 20MB)</p>
+                    </div>
+                    
+                    <div class="compression-controls">
+                        <div class="control-group">
+                            <label for="compressionLevel">Compression Level</label>
+                            <div class="slider-container">
+                                <span class="quality-value" id="qualityValue">80%</span>
+                                <input type="range" min="10" max="100" value="80" class="slider" id="compressionLevel">
+                                <span>High Quality</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="outputFormat">Output Format</label>
+                            <select id="outputFormat" class="format-select">
+                                <option value="original">Keep Original Format</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="maxWidth">Max Width (optional)</label>
+                            <div class="number-input-container">
+                                <input type="number" id="maxWidth" placeholder="Enter max width in pixels" class="number-input" min="1">
+                                <div class="number-input-buttons">
+                                    <button type="button" class="number-input-button" id="increaseWidth">
+                                        <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="number-input-button" id="decreaseWidth">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="input-hint">Set a maximum width to resize your image (height will adjust automatically)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar" id="compressProgressBar">
+                        <div class="progress" id="compressProgress"></div>
+                    </div>
+                    
+                    <button class="button" id="compressBtn" disabled><i class="fas fa-compress-alt"></i> Compress Image</button>
+                    
+                    <div class="loader" id="loader">
+                        <div class="spinner"></div>
+                        <p>Compressing your image...</p>
+                    </div>
+                    
+                    <div class="error-message" id="compressError"></div>
+                    <div class="success-message" id="compressSuccess"></div>
+                    
+                    <div class="results" id="results">
+                        <h3>Compression Results</h3>
+                        
+                        <div class="comparison">
+                            <div class="image-box">
+                                <h4>Original Image</h4>
+                                <img id="originalImage" src="" alt="Original image">
+                                <p id="originalSize"></p>
+                                <p id="originalDimensions"></p>
+                            </div>
+                            
+                            <div class="image-box">
+                                <h4>Compressed Image</h4>
+                                <img id="compressedImage" src="" alt="Compressed image">
+                                <p id="compressedSize"></p>
+                                <p id="compressedDimensions"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="savings" id="savings"></div>
+                        
+                        <button class="button download-btn" id="downloadBtn"><i class="fas fa-download"></i> Download Compressed Image</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Editing Tab -->
+            <div class="tab-content" id="edit-tab">
+                <div class="tool-container">
+                    <div class="upload-area" id="editDropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & Drop your image here</p>
+                        <p>or</p>
+                        <button class="button" id="selectEditImageBtn"><i class="fas fa-file-image"></i> Select Image</button>
+                        <input type="file" id="editFileInput" accept="image/*" hidden>
+                    </div>
+                    
+                    <div class="editor-container">
+                        <div class="editor-preview">
+                            <h4>Preview</h4>
+                            <div class="crop-container" id="cropContainer">
+                                <canvas id="editCanvas" width="500" height="400" style="max-width: 100%; display: block;"></canvas>
+                                <div class="crop-handle" id="cropHandle" style="display: none;"></div>
+                            </div>
+                            
+                            <div class="filter-gallery" id="filterGallery">
+                                <div class="filter-item" data-filter="normal">
+                                    <div style="width:100%;height:100%;background:linear-gradient(45deg, #ff9a9e, #fad0c4)"></div>
+                                    <span style="position:absolute;bottom:2px;left:2px;font-size:9px;color:white;text-shadow:1px 1px 2px black">Normal</span>
+                                </div>
+                                <div class="filter-item" data-filter="grayscale">
+                                    <div style="width:100%;height:100%;background:linear-gradient(45deg, #bdc3c7, #2c3e50)"></div>
+                                    <span style="position:absolute;bottom:2px;left:2px;font-size:9px;color:white;text-shadow:1px 1px 2px black">Grayscale</span>
+                                </div>
+                                <div class="filter-item" data-filter="sepia">
+                                    <div style="width:100%;height:100%;background:linear-gradient(45deg, #bf953f, #fcf6ba)"></div>
+                                    <span style="position:absolute;bottom:2px;left:2px;font-size:9px;color:white;text-shadow:1px 1px 2px black">Sepia</span>
+                                </div>
+                                <div class="filter-item" data-filter="vintage">
+                                    <div style="width:100%;height:100%;background:linear-gradient(45deg, #6a3093, #a044ff)"></div>
+                                    <span style="position:absolute;bottom:2px;left:2px;font-size:9px;color:white;text-shadow:1px 1px 2px black">Vintage</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-controls">
+                            <h4>Editing Tools</h4>
+                            
+                            <div class="editor-control-group">
+                                <label for="brightness">Brightness</label>
+                                <input type="range" id="brightness" min="-100" max="100" value="0" class="slider">
+                            </div>
+                            
+                            <div class="editor-control-group">
+                                <label for="contrast">Contrast</label>
+                                <input type="range" id="contrast" min="-100" max="100" value="0" class="slider">
+                            </div>
+                            
+                            <div class="editor-control-group">
+                                <label for="saturation">Saturation</label>
+                                <input type="range" id="saturation" min="-100" max="100" value="0" class="slider">
+                            </div>
+                            
+                            <div class="editor-control-group">
+                                <label for="rotation">Rotation</label>
+                                <input type="range" id="rotation" min="0" max="360" value="0" class="slider">
+                            </div>
+                            
+                            <div class="editor-control-group">
+                                <label for="cropToggle">Crop Tool</label>
+                                <button class="button button-sm" id="cropToggleBtn"><i class="fas fa-crop-alt"></i> Toggle Crop</button>
+                            </div>
+                            
+                            <div class="editor-actions">
+                                <button class="button button-sm" id="flipHorizontalBtn"><i class="fas fa-arrows-alt-h"></i> Flip H</button>
+                                <button class="button button-sm" id="flipVerticalBtn"><i class="fas fa-arrows-alt-v"></i> Flip V</button>
+                                <button class="button button-sm" id="resetEditBtn"><i class="fas fa-redo"></i> Reset</button>
+                                <button class="button" id="saveEditBtn"><i class="fas fa-save"></i> Save Image</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image Merging Tab -->
+            <div class="tab-content" id="merge-tab">
+                <div class="tool-container">
+                    <div class="multi-upload-area" id="mergeDropArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & Drop multiple images here</p>
+                        <p>or</p>
+                        <button class="button" id="selectMergeImagesBtn"><i class="fas fa-file-image"></i> Select Images</button>
+                        <input type="file" id="mergeFileInput" accept="image/*" multiple hidden>
+                        <p class="supported-formats">Select 2 or more images to merge</p>
+                    </div>
+                    
+                    <div class="uploaded-files" id="uploadedFilesContainer"></div>
+                    
+                    <div class="batch-controls">
+                        <button class="button button-sm" id="clearAllImagesBtn"><i class="fas fa-trash"></i> Clear All</button>
+                        <button class="button button-sm" id="reorderImagesBtn"><i class="fas fa-sort"></i> Reorder</button>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="mergeDirection">Merge Direction</label>
+                        <select id="mergeDirection" class="number-input">
+                            <option value="horizontal">Horizontal</option>
+                            <option value="vertical">Vertical</option>
+                            <option value="grid">Grid (2 columns)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="mergeSpacing">Spacing Between Images (px)</label>
+                        <input type="range" id="mergeSpacing" min="0" max="50" value="0" class="slider">
+                        <span class="quality-value" id="spacingValue">0px</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="backgroundColor">Background Color</label>
+                        <input type="color" id="backgroundColor" value="#000000" class="number-input" style="height: 40px;">
+                    </div>
+                    
+                    <button class="button" id="mergeImagesBtn" disabled><i class="fas fa-object-group"></i> Merge Images</button>
+                    
+                    <div class="loader" id="mergeLoader">
+                        <div class="spinner"></div>
+                        <p>Merging your images...</p>
+                    </div>
+                    
+                    <div class="results" id="mergeResults">
+                        <h3>Merged Image</h3>
+                        <div class="image-box">
+                            <img id="mergedImage" src="" alt="Merged image">
+                        </div>
+                        <button class="button download-btn" id="downloadMergeBtn"><i class="fas fa-download"></i> Download Merged Image</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PDF Compression Tab -->
+            <div class="tab-content" id="compress-pdf-tab">
+                <div class="tool-container">
+                    <h3>PDF Compression Tool</h3>
+                    <p>Reduce the file size of your PDF documents while maintaining quality.</p>
+                    
+                    <div class="upload-area" id="compressPdfDropArea">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & Drop your PDF here</p>
+                        <p>or</p>
+                        <button class="button" id="selectCompressPdfBtn"><i class="fas fa-file"></i> Select PDF</button>
+                        <input type="file" id="compressPdfFileInput" accept=".pdf" hidden>
+                    </div>
+                    
+                    <div class="compression-controls">
+                        <div class="control-group">
+                            <label for="pdfCompressionLevel">Compression Level</label>
+                            <div class="slider-container">
+                                <span class="quality-value" id="pdfQualityValue">Medium</span>
+                                <input type="range" min="1" max="3" value="2" class="slider" id="pdfCompressionLevel">
+                                <span>Better Quality</span>
+                            </div>
+                            <p class="input-hint">1 - Maximum Compression, 2 - Balanced, 3 - Better Quality</p>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="pdfImageQuality">Image Quality (if present)</label>
+                            <div class="slider-container">
+                                <span class="quality-value" id="pdfImageQualityValue">70%</span>
+                                <input type="range" min="10" max="100" value="70" class="slider" id="pdfImageQuality">
+                                <span>High Quality</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="button" id="compressPdfBtn" disabled><i class="fas fa-compress-alt"></i> Compress PDF</button>
+                    
+                    <div class="progress-bar" id="compressPdfProgressBar">
+                        <div class="progress" id="compressPdfProgress"></div>
+                    </div>
+                    
+                    <div class="loader" id="compressPdfLoader">
+                        <div class="spinner"></div>
+                        <p>Compressing your PDF...</p>
+                    </div>
+                    
+                    <div class="error-message" id="compressPdfError"></div>
+                    <div class="success-message" id="compressPdfSuccess"></div>
+                    
+                    <div class="results" id="compressPdfResults">
+                        <h3>PDF Compression Results</h3>
+                        
+                        <div class="comparison">
+                            <div class="image-box">
+                                <h4>Original PDF</h4>
+                                <div style="width: 100px; height: 130px; margin: 0 auto; background: #2c3e50; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+                                    <i class="fas fa-file-pdf" style="font-size: 3rem; color: #e74c3c;"></i>
+                                </div>
+                                <p id="originalPdfSize"></p>
+                            </div>
+                            
+                            <div class="image-box">
+                                <h4>Compressed PDF</h4>
+                                <div style="width: 100px; height: 130px; margin: 0 auto; background: #2c3e50; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+                                    <i class="fas fa-file-pdf" style="font-size: 3rem; color: #2ecc71;"></i>
+                                </div>
+                                <p id="compressedPdfSize"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="savings" id="pdfSavings"></div>
+                        
+                        <button class="button download-btn" id="downloadCompressedPdfBtn"><i class="fas fa-download"></i> Download Compressed PDF</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PDF Resize Tab -->
+            <div class="tab-content" id="resize-pdf-tab">
+                <div class="tool-container">
+                    <h3>PDF Resize Tool</h3>
+                    <p>Resize PDF pages to different dimensions or paper sizes.</p>
+                    
+                    <div class="upload-area" id="resizePdfDropArea">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & Drop your PDF here</p>
+                        <p>or</p>
+                        <button class="button" id="selectResizePdfBtn"><i class="fas fa-file"></i> Select PDF</button>
+                        <input type="file" id="resizePdfFileInput" accept=".pdf" hidden>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pageSize">Page Size</label>
+                        <select id="pageSize" class="number-input">
+                            <option value="a4">A4 (210×297mm)</option>
+                            <option value="letter">Letter (8.5×11in)</option>
+                            <option value="legal">Legal (8.5×14in)</option>
+                            <option value="a3">A3 (297×420mm)</option>
+                            <option value="a5">A5 (148×210mm)</option>
+                            <option value="custom">Custom Size</option>
+                        </select>
+                    </div>
+                    
+                    <div class="pdf-page-controls" id="customSizeControls" style="display: none;">
+                        <div class="pdf-page-control">
+                            <label for="customWidth">Width (mm)</label>
+                            <input type="number" id="customWidth" class="number-input" value="210" min="50" max="1000">
+                        </div>
+                        <div class="pdf-page-control">
+                            <label for="customHeight">Height (mm)</label>
+                            <input type="number" id="customHeight" class="number-input" value="297" min="50" max="1000">
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pageOrientation">Orientation</label>
+                        <select id="pageOrientation" class="number-input">
+                            <option value="portrait">Portrait</option>
+                            <option value="landscape">Landscape</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pageRange">Page Range (e.g., 1-5, 8, 11-13)</label>
+                        <input type="text" id="pageRange" class="number-input" placeholder="All pages" value="">
+                    </div>
+                    
+                    <button class="button" id="resizePdfBtn" disabled><i class="fas fa-compress-alt"></i> Resize PDF</button>
+                    
+                    <div class="loader" id="resizePdfLoader">
+                        <div class="spinner"></div>
+                        <p>Resizing your PDF...</p>
+                    </div>
+                    
+                    <div class="error-message" id="resizePdfError"></div>
+                    <div class="success-message" id="resizePdfSuccess"></div>
+                    
+                    <div class="results" id="resizePdfResults">
+                        <h3>PDF Resized Successfully</h3>
+                        <button class="button download-btn" id="downloadResizedPdfBtn"><i class="fas fa-download"></i> Download Resized PDF</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PDF Merge Tab -->
+            <div class="tab-content" id="merge-pdf-tab">
+                <div class="tool-container">
+                    <h3>PDF Merge Tool</h3>
+                    <p>Merge multiple PDF files into a single PDF document.</p>
+                    
+                    <div class="multi-upload-area" id="mergePdfDropArea">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & Drop multiple PDFs here</p>
+                        <p>or</p>
+                        <button class="button" id="selectMergePdfsBtn"><i class="fas fa-file"></i> Select PDFs</button>
+                        <input type="file" id="mergePdfFileInput" accept=".pdf" multiple hidden>
+                    </div>
+                    
+                    <div class="uploaded-files" id="uploadedPdfsContainer"></div>
+                    
+                    <div class="batch-controls">
+                        <button class="button button-sm" id="clearAllPdfsBtn"><i class="fas fa-trash"></i> Clear All</button>
+                        <button class="button button-sm" id="reorderPdfsBtn"><i class="fas fa-sort"></i> Reorder</button>
+                    </div>
+                    
+                    <button class="button" id="mergePdfsBtn" disabled><i class="fas fa-object-group"></i> Merge PDFs</button>
+                    
+                    <div class="loader" id="mergePdfLoader">
+                        <div class="spinner"></div>
+                        <p>Merging your PDFs...</p>
+                    </div>
+                    
+                    <div class="error-message" id="mergePdfError"></div>
+                    <div class="success-message" id="mergePdfSuccess"></div>
+                    
+                    <div class="results" id="mergePdfResults">
+                        <h3>PDFs Merged Successfully</h3>
+                        <button class="button download-btn" id="downloadMergedPdfBtn"><i class="fas fa-download"></i> Download Merged PDF</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Text to PDF Tab -->
+            <div class="tab-content" id="text-to-pdf-tab">
+                <div class="tool-container">
+                    <h3>Text to PDF Converter</h3>
+                    <p>Convert plain text to a downloadable PDF document.</p>
+                    
+                    <textarea class="text-area" id="textToConvert" placeholder="Enter your text here..."></textarea>
+                    
+                    <div class="control-group">
+                        <label for="pdfFilename">PDF File Name</label>
+                        <input type="text" id="pdfFilename" placeholder="Enter file name" class="number-input" value="document">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pdfFontSize">Font Size</label>
+                        <input type="range" id="pdfFontSize" min="10" max="24" value="12" class="slider">
+                        <span class="quality-value" id="fontSizeValue">12pt</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pdfPageSize">Page Size</label>
+                        <select id="pdfPageSize" class="number-input">
+                            <option value="a4">A4</option>
+                            <option value="letter">Letter</option>
+                            <option value="legal">Legal</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="pdfFontFamily">Font Family</label>
+                        <select id="pdfFontFamily" class="number-input">
+                            <option value="helvetica">Helvetica</option>
+                            <option value="times">Times Roman</option>
+                            <option value="courier">Courier</option>
+                        </select>
+                    </div>
+                    
+                    <button class="button" id="textToPdfBtn"><i class="fas fa-file-pdf"></i> Convert to PDF</button>
+                    
+                    <div class="success-message" id="textToPdfSuccess"></div>
+                </div>
+            </div>
+            
+            <!-- PDF to Text Tab -->
+            <div class="tab-content" id="pdf-to-text-tab">
+                <div class="tool-container">
+                    <h3>PDF to Text Converter</h3>
+                    <p>Extract text content from PDF files.</p>
+                    
+                    <div class="upload-area" id="pdfToTextDropArea">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & Drop your PDF here</p>
+                        <p>or</p>
+                        <button class="button" id="selectPdfToTextBtn"><i class="fas fa-file"></i> Select PDF</button>
+                        <input type="file" id="pdfToTextFileInput" accept=".pdf" hidden>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="textPageRange">Page Range (e.g., 1-5, 8, 11-13)</label>
+                        <input type="text" id="textPageRange" class="number-input" placeholder="All pages" value="">
+                    </div>
+                    
+                    <div class="loader" id="pdfToTextLoader">
+                        <div class="spinner"></div>
+                        <p>Extracting text from PDF...</p>
+                    </div>
+                    
+                    <div class="error-message" id="pdfToTextError"></div>
+                    <div class="success-message" id="pdfToTextSuccess"></div>
+                    
+                    <div class="results" id="pdfToTextResults">
+                        <h3>Extracted Text</h3>
+                        <textarea class="text-area" id="extractedText" readonly></textarea>
+                        <button class="button download-btn" id="downloadTextBtn"><i class="fas fa-download"></i> Download as Text File</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+         <!-- Middle Ad Container -->
+        <div class="ad-container" id="myAd2" style="margin: 30px 0;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4776326465919653"
+                 data-ad-slot="6500938827"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <section>
+            <h2>Why Choose FileCompress Pro+?</h2>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Fast Processing</h3>
+                    <p>Compress and edit files in seconds with our optimized algorithms</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure & Private</h3>
+                    <p>Your files are processed in-browser and never uploaded to our servers</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-tools"></i>
+                    <h3>Multiple Tools</h3>
+                    <p>All-in-one solution for file compression, editing, merging and conversion</p>
+                </div>
+                
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices from desktop to mobile phones</p>
+                </div>
+            </div>
+        </section>
+        <!-- Bottom Ad Container -->
+        <div class="ad-container" id="ad-bottom" style="margin: 40px 0;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4776326465919653"
+                 data-ad-slot="0987654321"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <footer>
+            <p class="copyright">© 2023 FileCompress Pro+. All rights reserved.</p>
+            <p>This tool is built with HTML5 Canvas and JavaScript for client-side processing.</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
